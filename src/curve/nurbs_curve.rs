@@ -28,9 +28,13 @@ use crate::{misc::FloatingPoint, ClosestParameterNewton, ClosestParameterProblem
 
 use super::KnotStyle;
 
+#[cfg(feature = "bevy")]
+use bevy::reflect::Reflect;
+
 /// NURBS curve representation
 /// By generics, it can be used for 2D or 3D curves with f32 or f64 scalar types
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Clone, Debug, PartialEq, )]
+#[cfg_attr(feature = "bevy", derive(Reflect))]
 pub struct NurbsCurve<T: FloatingPoint, D: DimName>
 where
     DefaultAllocator: Allocator<D>,
@@ -478,7 +482,7 @@ where
         let segments = &segments[i..j];
 
         let (_, u) = self.knots_domain();
-        let gauss = GaussLegendre::init(16 + self.degree);
+        let gauss = GaussLegendre::new(16 + self.degree).unwrap();
         let length = segments
             .iter()
             .map(|s| compute_bezier_segment_length(s, u, &gauss))
@@ -535,7 +539,7 @@ where
         let mut acc = T::zero();
         let mut acc_prev = T::zero();
 
-        let gauss = GaussLegendre::init(16 + self.degree);
+        let gauss = GaussLegendre::new(16 + self.degree).unwrap();
         let eps = T::from_f64(1e-6).unwrap();
         let tolerance = T::from_f64(1e-3 * 2.5).unwrap();
 
