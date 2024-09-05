@@ -31,9 +31,7 @@ use super::KnotStyle;
 #[cfg(feature = "bevy")]
 use bevy::reflect::Reflect;
 
-/// NURBS curve representation
-/// By generics, it can be used for 2D or 3D curves with f32 or f64 scalar types
-#[derive(Clone, Debug, PartialEq, )]
+#[derive(Clone, Debug, PartialEq, Default)]
 #[cfg_attr(feature = "bevy", derive(Reflect))]
 pub struct NurbsCurve<T: FloatingPoint, D: DimName>
 where

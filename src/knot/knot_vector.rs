@@ -6,7 +6,7 @@ use simba::scalar::SupersetOf;
 use crate::prelude::{FloatingPoint, Invertible, KnotMultiplicity};
 
 /// Knot vector representation
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Clone, Debug, PartialEq, Default)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct KnotVector<T>(Vec<T>);
 
